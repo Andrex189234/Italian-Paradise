@@ -332,39 +332,157 @@ function Player({ position, inVehicle, onPositionChange }) {
   );
 }
 
-// Vehicle component  
+// Realistic Vehicle component  
 function Vehicle({ vehicle, isPlayerVehicle, onEnter }) {
   const vehicleRef = useRef();
   const [hovered, setHovered] = useState(false);
 
-  const getVehicleGeometry = (type) => {
-    switch (type) {
-      case 'sports':
-        return <boxGeometry args={[4, 1.2, 2]} />;
-      case 'compact':
-        return <boxGeometry args={[3, 1, 1.8]} />;
-      case 'scooter':
-        return <cylinderGeometry args={[0.3, 0.3, 1.5]} />;
-      default:
-        return <boxGeometry args={[3.5, 1.1, 2]} />;
-    }
-  };
+  // Sports Car (Ferrari-like)
+  const SportsCar = ({ color = '#ff0000' }) => (
+    <group>
+      {/* Main body */}
+      <mesh position={[0, 0.3, 0]} castShadow>
+        <boxGeometry args={[4, 0.8, 1.8]} />
+        <meshLambertMaterial color={color} />
+      </mesh>
+      {/* Hood */}
+      <mesh position={[1.5, 0.5, 0]} castShadow>
+        <boxGeometry args={[1, 0.4, 1.6]} />
+        <meshLambertMaterial color={color} />
+      </mesh>
+      {/* Roof/Cabin */}
+      <mesh position={[-0.5, 0.9, 0]} castShadow>
+        <boxGeometry args={[2, 0.8, 1.4]} />
+        <meshLambertMaterial color={color} />
+      </mesh>
+      {/* Windshield */}
+      <mesh position={[0.3, 1, 0]} castShadow>
+        <boxGeometry args={[0.8, 0.6, 1.45]} />
+        <meshLambertMaterial color="#87CEEB" transparent opacity={0.7} />
+      </mesh>
+      {/* Wheels */}
+      <mesh position={[1.2, -0.2, 1]} castShadow>
+        <cylinderGeometry args={[0.4, 0.4, 0.3]} rotation={[0, 0, Math.PI/2]} />
+        <meshLambertMaterial color="#2F2F2F" />
+      </mesh>
+      <mesh position={[1.2, -0.2, -1]} castShadow>
+        <cylinderGeometry args={[0.4, 0.4, 0.3]} rotation={[0, 0, Math.PI/2]} />
+        <meshLambertMaterial color="#2F2F2F" />
+      </mesh>
+      <mesh position={[-1.2, -0.2, 1]} castShadow>
+        <cylinderGeometry args={[0.4, 0.4, 0.3]} rotation={[0, 0, Math.PI/2]} />
+        <meshLambertMaterial color="#2F2F2F" />
+      </mesh>
+      <mesh position={[-1.2, -0.2, -1]} castShadow>
+        <cylinderGeometry args={[0.4, 0.4, 0.3]} rotation={[0, 0, Math.PI/2]} />
+        <meshLambertMaterial color="#2F2F2F" />
+      </mesh>
+      {/* Headlights */}
+      <mesh position={[2.1, 0.4, 0.6]} castShadow>
+        <sphereGeometry args={[0.2]} />
+        <meshLambertMaterial color="#FFFACD" emissive="#FFFACD" emissiveIntensity={0.3} />
+      </mesh>
+      <mesh position={[2.1, 0.4, -0.6]} castShadow>
+        <sphereGeometry args={[0.2]} />
+        <meshLambertMaterial color="#FFFACD" emissive="#FFFACD" emissiveIntensity={0.3} />
+      </mesh>
+    </group>
+  );
 
-  const getVehicleColor = (type) => {
+  // Compact Car (Fiat 500-like)
+  const CompactCar = ({ color = '#00ff00' }) => (
+    <group>
+      {/* Main body */}
+      <mesh position={[0, 0.4, 0]} castShadow>
+        <boxGeometry args={[3, 1, 1.6]} />
+        <meshLambertMaterial color={color} />
+      </mesh>
+      {/* Rounded roof */}
+      <mesh position={[0, 0.8, 0]} castShadow>
+        <sphereGeometry args={[1.2, 8, 6]} />
+        <meshLambertMaterial color={color} />
+      </mesh>
+      {/* Windshield */}
+      <mesh position={[0.8, 0.7, 0]} castShadow>
+        <boxGeometry args={[0.6, 0.5, 1.5]} />
+        <meshLambertMaterial color="#87CEEB" transparent opacity={0.7} />
+      </mesh>
+      {/* Rear window */}
+      <mesh position={[-0.8, 0.7, 0]} castShadow>
+        <boxGeometry args={[0.6, 0.5, 1.5]} />
+        <meshLambertMaterial color="#87CEEB" transparent opacity={0.7} />
+      </mesh>
+      {/* Wheels */}
+      <mesh position={[1, -0.1, 0.9]} castShadow>
+        <cylinderGeometry args={[0.35, 0.35, 0.25]} rotation={[0, 0, Math.PI/2]} />
+        <meshLambertMaterial color="#2F2F2F" />
+      </mesh>
+      <mesh position={[1, -0.1, -0.9]} castShadow>
+        <cylinderGeometry args={[0.35, 0.35, 0.25]} rotation={[0, 0, Math.PI/2]} />
+        <meshLambertMaterial color="#2F2F2F" />
+      </mesh>
+      <mesh position={[-1, -0.1, 0.9]} castShadow>
+        <cylinderGeometry args={[0.35, 0.35, 0.25]} rotation={[0, 0, Math.PI/2]} />
+        <meshLambertMaterial color="#2F2F2F" />
+      </mesh>
+      <mesh position={[-1, -0.1, -0.9]} castShadow>
+        <cylinderGeometry args={[0.35, 0.35, 0.25]} rotation={[0, 0, Math.PI/2]} />
+        <meshLambertMaterial color="#2F2F2F" />
+      </mesh>
+    </group>
+  );
+
+  // Scooter (Vespa-like)
+  const Scooter = ({ color = '#0080ff' }) => (
+    <group>
+      {/* Main body */}
+      <mesh position={[0, 0.3, 0]} castShadow>
+        <cylinderGeometry args={[0.4, 0.6, 1.5]} />
+        <meshLambertMaterial color={color} />
+      </mesh>
+      {/* Seat */}
+      <mesh position={[-0.3, 0.7, 0]} castShadow>
+        <boxGeometry args={[0.8, 0.2, 0.6]} />
+        <meshLambertMaterial color="#654321" />
+      </mesh>
+      {/* Handlebars */}
+      <mesh position={[0.5, 0.9, 0]} castShadow>
+        <cylinderGeometry args={[0.05, 0.05, 0.8]} rotation={[0, 0, Math.PI/2]} />
+        <meshLambertMaterial color="#2F2F2F" />
+      </mesh>
+      {/* Front wheel */}
+      <mesh position={[0.7, -0.1, 0]} castShadow>
+        <cylinderGeometry args={[0.3, 0.3, 0.2]} rotation={[0, 0, Math.PI/2]} />
+        <meshLambertMaterial color="#2F2F2F" />
+      </mesh>
+      {/* Rear wheel */}
+      <mesh position={[-0.7, -0.1, 0]} castShadow>
+        <cylinderGeometry args={[0.3, 0.3, 0.2]} rotation={[0, 0, Math.PI/2]} />
+        <meshLambertMaterial color="#2F2F2F" />
+      </mesh>
+      {/* Headlight */}
+      <mesh position={[0.8, 0.5, 0]} castShadow>
+        <sphereGeometry args={[0.15]} />
+        <meshLambertMaterial color="#FFFACD" emissive="#FFFACD" emissiveIntensity={0.4} />
+      </mesh>
+    </group>
+  );
+
+  const getVehicleComponent = (type) => {
     switch (type) {
       case 'sports':
-        return '#ff0000';
+        return <SportsCar color="#ff0000" />;
       case 'compact':
-        return '#00ff00';
+        return <CompactCar color="#00ff00" />;
       case 'scooter':
-        return '#0080ff';
+        return <Scooter color="#0080ff" />;
       default:
-        return '#ffff00';
+        return <CompactCar color="#ffff00" />;
     }
   };
 
   return (
-    <mesh
+    <group
       ref={vehicleRef}
       position={[vehicle.position.x, vehicle.position.y + 0.6, vehicle.position.z]}
       onPointerOver={() => setHovered(true)}
@@ -372,10 +490,7 @@ function Vehicle({ vehicle, isPlayerVehicle, onEnter }) {
       onClick={onEnter}
       castShadow
     >
-      {getVehicleGeometry(vehicle.type)}
-      <meshLambertMaterial 
-        color={hovered ? '#ffffff' : getVehicleColor(vehicle.type)}
-      />
+      {getVehicleComponent(vehicle.type)}
       {hovered && (
         <Text
           position={[0, 2, 0]}
@@ -387,7 +502,7 @@ function Vehicle({ vehicle, isPlayerVehicle, onEnter }) {
           {vehicle.name}
         </Text>
       )}
-    </mesh>
+    </group>
   );
 }
 
