@@ -25,28 +25,60 @@ function Ground() {
   );
 }
 
-// Roads component
+// Enhanced Roads network
 function Roads() {
   return (
     <>
-      {/* Main horizontal road */}
+      {/* Main horizontal highways */}
       <mesh position={[0, 0, 0]}>
-        <boxGeometry args={[100, 0.1, 4]} />
+        <boxGeometry args={[300, 0.1, 8]} />
         <meshLambertMaterial color="#2c2c2c" />
       </mesh>
-      {/* Main vertical road */}
+      <mesh position={[0, 0, 60]}>
+        <boxGeometry args={[200, 0.1, 6]} />
+        <meshLambertMaterial color="#2c2c2c" />
+      </mesh>
+      <mesh position={[0, 0, -60]}>
+        <boxGeometry args={[200, 0.1, 6]} />
+        <meshLambertMaterial color="#2c2c2c" />
+      </mesh>
+      
+      {/* Main vertical highways */}
       <mesh position={[0, 0, 0]}>
-        <boxGeometry args={[4, 0.1, 100]} />
+        <boxGeometry args={[8, 0.1, 300]} />
         <meshLambertMaterial color="#2c2c2c" />
       </mesh>
-      {/* Cross roads */}
-      <mesh position={[25, 0, 0]}>
-        <boxGeometry args={[4, 0.1, 50]} />
+      <mesh position={[80, 0, 0]}>
+        <boxGeometry args={[6, 0.1, 200]} />
         <meshLambertMaterial color="#2c2c2c" />
       </mesh>
-      <mesh position={[-25, 0, 0]}>
-        <boxGeometry args={[4, 0.1, 50]} />
+      <mesh position={[-80, 0, 0]}>
+        <boxGeometry args={[6, 0.1, 200]} />
         <meshLambertMaterial color="#2c2c2c" />
+      </mesh>
+      
+      {/* Secondary roads */}
+      <mesh position={[40, 0, 30]}>
+        <boxGeometry args={[4, 0.1, 60]} />
+        <meshLambertMaterial color="#3c3c3c" />
+      </mesh>
+      <mesh position={[-40, 0, -30]}>
+        <boxGeometry args={[4, 0.1, 80]} />
+        <meshLambertMaterial color="#3c3c3c" />
+      </mesh>
+      <mesh position={[20, 0, -70]}>
+        <boxGeometry args={[60, 0.1, 4]} />
+        <meshLambertMaterial color="#3c3c3c" />
+      </mesh>
+      
+      {/* Road lines */}
+      <mesh position={[0, 0.05, 0]}>
+        <boxGeometry args={[300, 0.05, 0.3]} />
+        <meshLambertMaterial color="#ffff00" />
+      </mesh>
+      <mesh position={[0, 0.05, 0]}>
+        <boxGeometry args={[0.3, 0.05, 300]} />
+        <meshLambertMaterial color="#ffff00" />
       </mesh>
     </>
   );
