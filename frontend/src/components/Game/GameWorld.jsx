@@ -202,8 +202,172 @@ function Vehicle({ vehicle, isPlayerVehicle, onEnter }) {
   );
 }
 
-// Mission markers
-function MissionMarker({ mission, onClick }) {
+// NPC Component
+function NPC({ position, color = '#FF6B6B', walkPath, speed = 0.02 }) {
+  const groupRef = useRef();
+  const [currentTarget, setCurrentTarget] = useState(0);
+  const [currentPos, setCurrentPos] = useState(position);
+
+  useFrame(() => {
+    if (groupRef.current && walkPath && walkPath.length > 1) {
+      const target = walkPath[currentTarget];
+      const direction = {
+        x: target.x - currentPos.x,
+        z: target.z - currentPos.z
+      };
+      const distance = Math.sqrt(direction.x ** 2 + direction.z ** 2);
+
+      if (distance < 0.5) {
+        // Reached target, move to next point
+        setCurrentTarget((prev) => (prev + 1) % walkPath.length);
+      } else {
+        // Move towards target
+        const normalizedDir = {
+          x: direction.x / distance,
+          z: direction.z / distance
+        };
+        const newPos = {
+          x: currentPos.x + normalizedDir.x * speed,
+          z: currentPos.z + normalizedDir.z * speed
+        };
+        setCurrentPos(newPos);
+        groupRef.current.position.set(newPos.x, position.y + 1, newPos.z);
+      }
+    }
+  });
+
+  return (
+    <group ref={groupRef} castShadow>
+      {/* Head */}
+      <mesh position={[0, 1.7, 0]} castShadow>
+        <sphereGeometry args={[0.22]} />
+        <meshLambertMaterial color="#FDBCB4" />
+      </mesh>
+      
+      {/* Hair */}
+      <mesh position={[0, 1.85, 0]} castShadow>
+        <sphereGeometry args={[0.25, 8, 6]} />
+        <meshLambertMaterial color="#8B4513" />
+      </mesh>
+      
+      {/* Body */}
+      <mesh position={[0, 0.8, 0]} castShadow>
+        <boxGeometry args={[0.5, 1.1, 0.25]} />
+        <meshLambertMaterial color={color} />
+      </mesh>
+      
+      {/* Left Arm */}
+      <mesh position={[-0.35, 0.9, 0]} castShadow>
+        <cylinderGeometry args={[0.07, 0.07, 0.7]} />
+        <meshLambertMaterial color="#FDBCB4" />
+      </mesh>
+      
+      {/* Right Arm */}
+      <mesh position={[0.35, 0.9, 0]} castShadow>
+        <cylinderGeometry args={[0.07, 0.07, 0.7]} />
+        <meshLambertMaterial color="#FDBCB4" />
+      </mesh>
+      
+      {/* Left Leg */}
+      <mesh position={[-0.12, -0.15, 0]} castShadow>
+        <cylinderGeometry args={[0.09, 0.09, 0.7]} />
+        <meshLambertMaterial color="#000080" />
+      </mesh>
+      
+      {/* Right Leg */}
+      <mesh position={[0.12, -0.15, 0]} castShadow>
+        <cylinderGeometry args={[0.09, 0.09, 0.7]} />
+        <meshLambertMaterial color="#000080" />
+      </mesh>
+      
+      {/* Left Shoe */}
+      <mesh position={[-0.12, -0.6, 0.08]} castShadow>
+        <boxGeometry args={[0.12, 0.08, 0.25]} />
+        <meshLambertMaterial color="#654321" />
+      </mesh>
+      
+      {/* Right Shoe */}
+      <mesh position={[0.12, -0.6, 0.08]} castShadow>
+        <boxGeometry args={[0.12, 0.08, 0.25]} />
+        <meshLambertMaterial color="#654321" />
+      </mesh>
+    </group>
+  );
+}
+
+// NPCs Component
+function NPCs() {
+  const npcs = [
+    {
+      id: 'npc1',
+      position: { x: 8, y: 0, z: 8 },
+      color: '#32CD32',
+      walkPath: [
+        { x: 8, z: 8 },
+        { x: 15, z: 8 },
+        { x: 15, z: 15 },
+        { x: 8, z: 15 }
+      ]
+    },
+    {
+      id: 'npc2', 
+      position: { x: -12, y: 0, z: 10 },
+      color: '#FFD700',
+      walkPath: [
+        { x: -12, z: 10 },
+        { x: -5, z: 10 },
+        { x: -5, z: 5 },
+        { x: -12, z: 5 }
+      ]
+    },
+    {
+      id: 'npc3',
+      position: { x: 18, y: 0, z: -8 },
+      color: '#9370DB',
+      walkPath: [
+        { x: 18, z: -8 },
+        { x: 25, z: -8 },
+        { x: 25, z: -15 },
+        { x: 18, z: -15 }
+      ]
+    },
+    {
+      id: 'npc4',
+      position: { x: -20, y: 0, z: -5 },
+      color: '#FF69B4',
+      walkPath: [
+        { x: -20, z: -5 },
+        { x: -15, z: -5 },
+        { x: -15, z: -12 },
+        { x: -20, z: -12 }
+      ]
+    },
+    {
+      id: 'npc5',
+      position: { x: 5, y: 0, z: -20 },
+      color: '#20B2AA',
+      walkPath: [
+        { x: 5, z: -20 },
+        { x: 12, z: -20 },
+        { x: 12, z: -25 },
+        { x: 5, z: -25 }
+      ]
+    }
+  ];
+
+  return (
+    <>
+      {npcs.map(npc => (
+        <NPC
+          key={npc.id}
+          position={npc.position}
+          color={npc.color}
+          walkPath={npc.walkPath}
+        />
+      ))}
+    </>
+  );
+}
   const [hovered, setHovered] = useState(false);
   
   const getMarkerColor = (type) => {
