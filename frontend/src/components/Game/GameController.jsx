@@ -2,6 +2,7 @@ import React, { useState, useEffect, useCallback } from 'react';
 import { mockGameData } from '../../mock/gameData';
 import GameWorld from './GameWorld';
 import GameUI from './GameUI';
+import MiniMap from './MiniMap';
 import { useToast } from '../../hooks/use-toast';
 
 export default function GameController() {
