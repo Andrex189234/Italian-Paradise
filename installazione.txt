@@ -1,0 +1,379 @@
+# 🎮 ITALIAN PARADISE - GUIDA DI INSTALLAZIONE COMPLETA
+
+## 📋 PANORAMICA
+Italian Paradise è un gioco 3D open-world simile a GTA5, sviluppato con React (frontend), FastAPI (backend) e MongoDB (database). Il gioco include personaggi realistici, veicoli dettagliati, sistema giorno/notte, minimappa, missioni, rapine e un mondo esplorabile.
+
+## 🛠️ REQUISITI DI SISTEMA
+
+### Requisiti Minimi:
+- **Sistema Operativo**: Windows 10/11, macOS 10.15+, Linux Ubuntu 18.04+
+- **Node.js**: Versione 16.0 o superiore
+- **Python**: Versione 3.8 o superiore
+- **RAM**: 4GB minimo, 8GB raccomandato
+- **Spazio Disco**: 2GB liberi
+- **Browser**: Chrome 90+, Firefox 88+, Safari 14+
+
+### Software Necessario:
+- Git
+- Node.js e npm/yarn
+- Python 3.8+
+- MongoDB (locale o cloud)
+
+---
+
+## 📦 INSTALLAZIONE PASSO-PASSO
+
+### 1. CLONAZIONE DEL PROGETTO
+```bash
+# Clona il repository
+git clone [URL_DEL_REPOSITORY]
+cd italian-paradise
+
+# Oppure crea la struttura manualmente:
+mkdir italian-paradise
+cd italian-paradise
+mkdir frontend backend
+```
+
+### 2. CONFIGURAZIONE FRONTEND
+
+#### 2.1 Installazione Dipendenze Frontend
+```bash
+cd frontend
+
+# Installa Yarn (se non presente)
+npm install -g yarn
+
+# Installa dipendenze
+yarn install
+
+# Dipendenze principali necessarie:
+yarn add three @react-three/fiber @react-three/drei @react-three/cannon
+yarn add react-router-dom axios
+yarn add @radix-ui/react-accordion @radix-ui/react-alert-dialog
+yarn add @radix-ui/react-avatar @radix-ui/react-checkbox
+yarn add @radix-ui/react-dialog @radix-ui/react-dropdown-menu
+yarn add @radix-ui/react-label @radix-ui/react-popover
+yarn add @radix-ui/react-progress @radix-ui/react-select
+yarn add @radix-ui/react-separator @radix-ui/react-slider
+yarn add @radix-ui/react-switch @radix-ui/react-tabs
+yarn add @radix-ui/react-toast @radix-ui/react-tooltip
+yarn add class-variance-authority clsx tailwind-merge
+yarn add @hookform/resolvers react-hook-form zod
+yarn add lucide-react sonner
+```
+
+#### 2.2 Configurazione Tailwind CSS
+```bash
+# Installa Tailwind CSS
+yarn add -D tailwindcss postcss autoprefixer @craco/craco
+yarn add -D tailwindcss-animate
+
+# Inizializza Tailwind
+npx tailwindcss init -p
+```
+
+#### 2.3 File di Configurazione Frontend
+
+**package.json** (sezione scripts):
+```json
+{
+  "scripts": {
+    "start": "craco start",
+    "build": "craco build",
+    "test": "craco test"
+  }
+}
+```
+
+**craco.config.js**:
+```javascript
+module.exports = {
+  style: {
+    postcss: {
+      plugins: [
+        require('tailwindcss'),
+        require('autoprefixer'),
+      ],
+    },
+  },
+};
+```
+
+**tailwind.config.js**:
+```javascript
+module.exports = {
+  darkMode: ["class"],
+  content: [
+    "./src/**/*.{js,jsx,ts,tsx}",
+    "./public/index.html"
+  ],
+  theme: {
+    extend: {
+      // Configurazione estesa per UI components
+    }
+  },
+  plugins: [require("tailwindcss-animate")],
+};
+```
+
+#### 2.4 Variabili d'Ambiente Frontend
+Crea file `frontend/.env`:
+```
+REACT_APP_BACKEND_URL=http://localhost:8001
+```
+
+### 3. CONFIGURAZIONE BACKEND
+
+#### 3.1 Installazione Dipendenze Backend
+```bash
+cd backend
+
+# Crea ambiente virtuale Python
+python -m venv venv
+
+# Attiva ambiente virtuale
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
+
+# Installa dipendenze
+pip install -r requirements.txt
+```
+
+#### 3.2 File requirements.txt
+```
+fastapi==0.110.1
+uvicorn==0.25.0
+motor==3.3.1
+pymongo==4.5.0
+python-dotenv>=1.0.1
+pydantic>=2.6.4
+python-multipart>=0.0.9
+python-jose>=3.3.0
+passlib>=1.7.4
+boto3>=1.34.129
+requests>=2.31.0
+pandas>=2.2.0
+numpy>=1.26.0
+cryptography>=42.0.8
+email-validator>=2.2.0
+pyjwt>=2.10.1
+tzdata>=2024.2
+pytest>=8.0.0
+typer>=0.9.0
+```
+
+#### 3.3 Variabili d'Ambiente Backend
+Crea file `backend/.env`:
+```
+MONGO_URL=mongodb://localhost:27017
+DB_NAME=italian_paradise
+SECRET_KEY=your_secret_key_here
+ALGORITHM=HS256
+ACCESS_TOKEN_EXPIRE_MINUTES=30
+```
+
+### 4. CONFIGURAZIONE DATABASE
+
+#### 4.1 Installazione MongoDB Locale
+**Windows:**
+1. Scarica MongoDB Community Server da https://www.mongodb.com/try/download/community
+2. Installa seguendo il wizard
+3. Avvia MongoDB come servizio
+
+**macOS (con Homebrew):**
+```bash
+brew tap mongodb/brew
+brew install mongodb-community
+brew services start mongodb/brew/mongodb-community
+```
+
+**Linux (Ubuntu):**
+```bash
+sudo apt-get update
+sudo apt-get install -y mongodb
+sudo systemctl start mongodb
+sudo systemctl enable mongodb
+```
+
+#### 4.2 Verifica MongoDB
+```bash
+# Testa connessione
+mongosh
+# Dovrebbe connettersi senza errori
+```
+
+#### 4.3 Alternativa: MongoDB Atlas (Cloud)
+Se preferisci usare MongoDB Atlas:
+1. Crea account su https://www.mongodb.com/cloud/atlas
+2. Crea cluster gratuito
+3. Ottieni connection string
+4. Aggiorna MONGO_URL nel file `.env`
+
+---
+
+## 🚀 AVVIO DELL'APPLICAZIONE
+
+### 1. Avvio Backend
+```bash
+cd backend
+source venv/bin/activate  # Linux/macOS
+# oppure venv\Scripts\activate  # Windows
+
+# Avvia server FastAPI
+uvicorn server:app --host 0.0.0.0 --port 8001 --reload
+```
+
+### 2. Avvio Frontend
+```bash
+# Nuovo terminale
+cd frontend
+yarn start
+```
+
+### 3. Verifica Installazione
+- Frontend: http://localhost:3000
+- Backend API: http://localhost:8001
+- API Docs: http://localhost:8001/docs
+
+---
+
+## 🎮 CONTROLLI DI GIOCO
+
+### Controlli Base:
+- **WASD**: Movimento personaggio
+- **Mouse**: Rotazione camera
+- **Scroll**: Zoom camera
+- **P**: Apri/chiudi telefono
+- **Enter**: Entra/esci da veicolo
+- **Click**: Interagisci con oggetti
+
+### Funzionalità:
+- **Telefono**: Chiama contatti per missioni, rapine, veicoli
+- **Minimappa**: Radar in alto a destra mostra posizione, veicoli, missioni
+- **Sistema Soldi**: Guadagna completando missioni
+- **Veicoli**: Ferrari, Fiat, Vespa con fisica realistica
+- **Giorno/Notte**: Ciclo automatico con illuminazione dinamica
+
+---
+
+## 🔧 RISOLUZIONE PROBLEMI
+
+### Problemi Comuni:
+
+#### Frontend non si avvia:
+```bash
+# Pulisci cache e reinstalla
+rm -rf node_modules package-lock.json yarn.lock
+yarn install
+yarn start
+```
+
+#### Backend non si connette:
+- Verifica che MongoDB sia in esecuzione
+- Controlla variabili d'ambiente in `.env`
+- Verifica porta 8001 sia libera
+
+#### Errori Three.js:
+- Assicurati che il browser supporti WebGL
+- Aggiorna driver scheda grafica
+- Prova browser diverso
+
+#### Performance basse:
+- Riduci qualità grafica nel browser
+- Chiudi altre applicazioni pesanti
+- Verifica requisiti minimi sistema
+
+### Log Debug:
+```bash
+# Frontend logs
+# Browser Developer Tools > Console
+
+# Backend logs
+# Terminale dove gira uvicorn
+```
+
+---
+
+## 📁 STRUTTURA PROGETTO
+
+```
+italian-paradise/
+├── frontend/
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── Game/
+│   │   │   │   ├── GameController.jsx
+│   │   │   │   ├── GameWorld.jsx
+│   │   │   │   ├── GameUI.jsx
+│   │   │   │   ├── MiniMap.jsx
+│   │   │   │   └── DayNightCycle.jsx
+│   │   │   └── ui/
+│   │   ├── hooks/
+│   │   ├── mock/
+│   │   └── App.js
+│   ├── package.json
+│   └── .env
+├── backend/
+│   ├── server.py
+│   ├── requirements.txt
+│   └── .env
+└── installazione.txt
+```
+
+---
+
+## 🔄 AGGIORNAMENTI
+
+### Aggiorna Dipendenze:
+```bash
+# Frontend
+cd frontend
+yarn upgrade
+
+# Backend
+cd backend
+pip install --upgrade -r requirements.txt
+```
+
+### Git Workflow:
+```bash
+git pull origin main
+# Reinstalla dipendenze se necessario
+# Riavvia applicazione
+```
+
+---
+
+## 🆘 SUPPORTO
+
+### In caso di problemi:
+1. Verifica requisiti sistema
+2. Controlla log di errore
+3. Cerca in sezione "Risoluzione Problemi"
+4. Verifica che tutte le dipendenze siano installate
+5. Riavvia completamente applicazione
+
+### File Log Importanti:
+- Browser Console (F12)
+- Terminal Backend
+- MongoDB logs
+
+---
+
+## 🏆 FEATURES PRINCIPALI
+
+✅ **Mondo 3D Realistico**: Città italiana con edifici dettagliati
+✅ **Personaggi Articolati**: Player e NPC con anatomia realistica  
+✅ **Veicoli Dettagliati**: Ferrari, Fiat, Vespa con fisica
+✅ **Sistema Giorno/Notte**: Ciclo automatico con illuminazione
+✅ **Minimappa Radar**: Navigazione e tracking in tempo reale
+✅ **Sistema Missioni**: Lavori, rapine, consegne con ricompense
+✅ **Telefono Funzionale**: Chiamate e contatti realistici
+✅ **Controlli Fluidi**: WASD + mouse per esperienza completa
+✅ **HUD Professionale**: Soldi, salute, info in tempo reale
+
+**BUON DIVERTIMENTO CON ITALIAN PARADISE! 🇮🇹🎮**
