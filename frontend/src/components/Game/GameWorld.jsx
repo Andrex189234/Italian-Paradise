@@ -368,6 +368,9 @@ function NPCs() {
     </>
   );
 }
+
+// Mission markers
+function MissionMarker({ mission, onClick }) {
   const [hovered, setHovered] = useState(false);
   
   const getMarkerColor = (type) => {
