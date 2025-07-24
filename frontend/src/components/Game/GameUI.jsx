@@ -102,7 +102,7 @@ function Phone({ contacts, missions, heists, onCall, onClose }) {
                         onClick={() => onCall(contact)}
                         className="bg-green-600 hover:bg-green-700"
                       >
-                        <Phone className="h-4 w-4" />
+                        <PhoneIcon className="h-4 w-4" />
                       </Button>
                     </div>
                   </CardContent>
