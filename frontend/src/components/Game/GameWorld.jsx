@@ -252,7 +252,7 @@ function Buildings() {
   );
 }
 
-// Realistic Player component
+// Enhanced Player component with better camera
 function Player({ position, inVehicle, onPositionChange }) {
   const groupRef = useRef();
   const { camera } = useThree();
@@ -261,12 +261,12 @@ function Player({ position, inVehicle, onPositionChange }) {
     if (groupRef.current && !inVehicle) {
       groupRef.current.position.set(position.x, position.y + 1, position.z);
       
-      // Camera follows player
-      camera.position.set(
-        position.x + 10,
-        position.y + 8,
-        position.z + 10
-      );
+      // Smooth camera follow with better positioning
+      const targetX = position.x + 12;
+      const targetY = position.y + 10;
+      const targetZ = position.z + 12;
+      
+      camera.position.lerp({ x: targetX, y: targetY, z: targetZ }, 0.1);
       camera.lookAt(position.x, position.y + 1, position.z);
     }
   });
@@ -328,6 +328,122 @@ function Player({ position, inVehicle, onPositionChange }) {
         <boxGeometry args={[0.15, 0.1, 0.3]} />
         <meshLambertMaterial color="#000000" />
       </mesh>
+    </group>
+  );
+}
+
+// Player in Vehicle component  
+function PlayerVehicle({ vehicle, player }) {
+  const vehicleRef = useRef();
+  const { camera } = useThree();
+
+  useFrame(() => {
+    if (vehicleRef.current && vehicle) {
+      vehicleRef.current.position.set(player.position.x, player.position.y + 0.6, player.position.z);
+      
+      // Camera follows vehicle smoothly
+      const targetX = player.position.x + 15;
+      const targetY = player.position.y + 8;
+      const targetZ = player.position.z + 15;
+      
+      camera.position.lerp({ x: targetX, y: targetY, z: targetZ }, 0.1);
+      camera.lookAt(player.position.x, player.position.y + 1, player.position.z);
+    }
+  });
+
+  if (!vehicle) return null;
+
+  // Get the vehicle component based on type
+  const getVehicleComponent = (type) => {
+    const SportsCar = ({ color = '#ff0000' }) => (
+      <group>
+        <mesh position={[0, 0.3, 0]} castShadow>
+          <boxGeometry args={[4, 0.8, 1.8]} />
+          <meshLambertMaterial color={color} />
+        </mesh>
+        <mesh position={[1.5, 0.5, 0]} castShadow>
+          <boxGeometry args={[1, 0.4, 1.6]} />
+          <meshLambertMaterial color={color} />
+        </mesh>
+        <mesh position={[-0.5, 0.9, 0]} castShadow>
+          <boxGeometry args={[2, 0.8, 1.4]} />
+          <meshLambertMaterial color={color} />
+        </mesh>
+        <mesh position={[0.3, 1, 0]} castShadow>
+          <boxGeometry args={[0.8, 0.6, 1.45]} />
+          <meshLambertMaterial color="#87CEEB" transparent opacity={0.7} />
+        </mesh>
+        {/* Wheels */}
+        <mesh position={[1.2, -0.2, 1]} castShadow>
+          <cylinderGeometry args={[0.4, 0.4, 0.3]} rotation={[0, 0, Math.PI/2]} />
+          <meshLambertMaterial color="#2F2F2F" />
+        </mesh>
+        <mesh position={[1.2, -0.2, -1]} castShadow>
+          <cylinderGeometry args={[0.4, 0.4, 0.3]} rotation={[0, 0, Math.PI/2]} />
+          <meshLambertMaterial color="#2F2F2F" />
+        </mesh>
+        <mesh position={[-1.2, -0.2, 1]} castShadow>
+          <cylinderGeometry args={[0.4, 0.4, 0.3]} rotation={[0, 0, Math.PI/2]} />
+          <meshLambertMaterial color="#2F2F2F" />
+        </mesh>
+        <mesh position={[-1.2, -0.2, -1]} castShadow>
+          <cylinderGeometry args={[0.4, 0.4, 0.3]} rotation={[0, 0, Math.PI/2]} />
+          <meshLambertMaterial color="#2F2F2F" />
+        </mesh>
+      </group>
+    );
+
+    const CompactCar = ({ color = '#00ff00' }) => (
+      <group>
+        <mesh position={[0, 0.4, 0]} castShadow>
+          <boxGeometry args={[3, 1, 1.6]} />
+          <meshLambertMaterial color={color} />
+        </mesh>
+        <mesh position={[0, 0.8, 0]} castShadow>
+          <sphereGeometry args={[1.2, 8, 6]} />
+          <meshLambertMaterial color={color} />
+        </mesh>
+        <mesh position={[0.8, 0.7, 0]} castShadow>
+          <boxGeometry args={[0.6, 0.5, 1.5]} />
+          <meshLambertMaterial color="#87CEEB" transparent opacity={0.7} />
+        </mesh>
+        <mesh position={[-0.8, 0.7, 0]} castShadow>
+          <boxGeometry args={[0.6, 0.5, 1.5]} />
+          <meshLambertMaterial color="#87CEEB" transparent opacity={0.7} />
+        </mesh>
+        {/* Wheels */}
+        <mesh position={[1, -0.1, 0.9]} castShadow>
+          <cylinderGeometry args={[0.35, 0.35, 0.25]} rotation={[0, 0, Math.PI/2]} />
+          <meshLambertMaterial color="#2F2F2F" />
+        </mesh>
+        <mesh position={[1, -0.1, -0.9]} castShadow>
+          <cylinderGeometry args={[0.35, 0.35, 0.25]} rotation={[0, 0, Math.PI/2]} />
+          <meshLambertMaterial color="#2F2F2F" />
+        </mesh>
+        <mesh position={[-1, -0.1, 0.9]} castShadow>
+          <cylinderGeometry args={[0.35, 0.35, 0.25]} rotation={[0, 0, Math.PI/2]} />
+          <meshLambertMaterial color="#2F2F2F" />
+        </mesh>
+        <mesh position={[-1, -0.1, -0.9]} castShadow>
+          <cylinderGeometry args={[0.35, 0.35, 0.25]} rotation={[0, 0, Math.PI/2]} />
+          <meshLambertMaterial color="#2F2F2F" />
+        </mesh>
+      </group>
+    );
+
+    switch (type) {
+      case 'sports':
+        return <SportsCar color="#ff0000" />;
+      case 'compact':
+        return <CompactCar color="#00ff00" />;
+      default:
+        return <CompactCar color="#ffff00" />;
+    }
+  };
+
+  return (
+    <group ref={vehicleRef} castShadow>
+      {getVehicleComponent(vehicle.type)}
     </group>
   );
 }
