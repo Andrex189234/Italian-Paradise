@@ -63,14 +63,14 @@ function Buildings() {
   );
 }
 
-// Player component
+// Realistic Player component
 function Player({ position, inVehicle, onPositionChange }) {
-  const playerRef = useRef();
+  const groupRef = useRef();
   const { camera } = useThree();
 
   useFrame(() => {
-    if (playerRef.current && !inVehicle) {
-      playerRef.current.position.set(position.x, position.y + 1, position.z);
+    if (groupRef.current && !inVehicle) {
+      groupRef.current.position.set(position.x, position.y + 1, position.z);
       
       // Camera follows player
       camera.position.set(
@@ -85,10 +85,61 @@ function Player({ position, inVehicle, onPositionChange }) {
   if (inVehicle) return null;
 
   return (
-    <mesh ref={playerRef} castShadow>
-      <cylinderGeometry args={[0.5, 0.5, 2]} />
-      <meshLambertMaterial color="#FFB347" />
-    </mesh>
+    <group ref={groupRef} castShadow>
+      {/* Head */}
+      <mesh position={[0, 1.7, 0]} castShadow>
+        <sphereGeometry args={[0.25]} />
+        <meshLambertMaterial color="#FDBCB4" />
+      </mesh>
+      
+      {/* Hair */}
+      <mesh position={[0, 1.85, 0]} castShadow>
+        <sphereGeometry args={[0.28, 8, 6]} />
+        <meshLambertMaterial color="#4A4A4A" />
+      </mesh>
+      
+      {/* Body */}
+      <mesh position={[0, 0.8, 0]} castShadow>
+        <boxGeometry args={[0.6, 1.2, 0.3]} />
+        <meshLambertMaterial color="#FF6B6B" />
+      </mesh>
+      
+      {/* Left Arm */}
+      <mesh position={[-0.4, 0.9, 0]} castShadow>
+        <cylinderGeometry args={[0.08, 0.08, 0.8]} />
+        <meshLambertMaterial color="#FDBCB4" />
+      </mesh>
+      
+      {/* Right Arm */}
+      <mesh position={[0.4, 0.9, 0]} castShadow>
+        <cylinderGeometry args={[0.08, 0.08, 0.8]} />
+        <meshLambertMaterial color="#FDBCB4" />
+      </mesh>
+      
+      {/* Left Leg */}
+      <mesh position={[-0.15, -0.2, 0]} castShadow>
+        <cylinderGeometry args={[0.1, 0.1, 0.8]} />
+        <meshLambertMaterial color="#4169E1" />
+      </mesh>
+      
+      {/* Right Leg */}
+      <mesh position={[0.15, -0.2, 0]} castShadow>
+        <cylinderGeometry args={[0.1, 0.1, 0.8]} />
+        <meshLambertMaterial color="#4169E1" />
+      </mesh>
+      
+      {/* Left Shoe */}
+      <mesh position={[-0.15, -0.65, 0.1]} castShadow>
+        <boxGeometry args={[0.15, 0.1, 0.3]} />
+        <meshLambertMaterial color="#000000" />
+      </mesh>
+      
+      {/* Right Shoe */}
+      <mesh position={[0.15, -0.65, 0.1]} castShadow>
+        <boxGeometry args={[0.15, 0.1, 0.3]} />
+        <meshLambertMaterial color="#000000" />
+      </mesh>
+    </group>
   );
 }
 
