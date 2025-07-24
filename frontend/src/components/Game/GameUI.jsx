@@ -236,6 +236,8 @@ function ControlsInfo() {
           <div>P - Telefono</div>
           <div>Click - Interagisci</div>
           <div>Enter - Entra/Esci veicolo</div>
+          <div>Mouse - Ruota camera</div>
+          <div>Scroll - Zoom</div>
         </div>
       </CardContent>
     </Card>
