@@ -437,6 +437,9 @@ export default function GameWorld({
         <Roads />
         <Buildings />
         
+        {/* NPCs */}
+        <NPCs />
+        
         {/* Player */}
         <Player 
           position={player.position} 
