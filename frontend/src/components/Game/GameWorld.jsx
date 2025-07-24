@@ -3,13 +3,25 @@ import { Canvas, useFrame, useThree } from '@react-three/fiber';
 import { OrbitControls, Text, Box, Cylinder, Sphere } from '@react-three/drei';
 import * as THREE from 'three';
 
-// Ground component
+// Ground component - Expanded world
 function Ground() {
   return (
-    <mesh receiveShadow position={[0, -0.5, 0]}>
-      <boxGeometry args={[100, 1, 100]} />
-      <meshLambertMaterial color="#4a5d3a" />
-    </mesh>
+    <>
+      {/* Main ground */}
+      <mesh receiveShadow position={[0, -0.5, 0]}>
+        <boxGeometry args={[300, 1, 300]} />
+        <meshLambertMaterial color="#4a5d3a" />
+      </mesh>
+      {/* Grass patches */}
+      <mesh receiveShadow position={[50, -0.4, 50]}>
+        <boxGeometry args={[40, 0.2, 40]} />
+        <meshLambertMaterial color="#5a7a4a" />
+      </mesh>
+      <mesh receiveShadow position={[-70, -0.4, -30]}>
+        <boxGeometry args={[50, 0.2, 35]} />
+        <meshLambertMaterial color="#5a7a4a" />
+      </mesh>
+    </>
   );
 }
 
