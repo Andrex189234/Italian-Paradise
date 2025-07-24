@@ -84,25 +84,170 @@ function Roads() {
   );
 }
 
-// Buildings component
+// Realistic Buildings component
 function Buildings() {
-  const buildings = [
-    { position: [15, 2, 15], size: [8, 4, 8], color: '#8B4513' },
-    { position: [-15, 3, 15], size: [10, 6, 10], color: '#CD853F' },
-    { position: [25, 4, 25], size: [12, 8, 8], color: '#A0522D' },
-    { position: [-25, 2.5, -15], size: [8, 5, 12], color: '#DEB887' },
-    { position: [35, 3, -5], size: [10, 6, 10], color: '#F4A460' },
-    { position: [-10, 2, 20], size: [6, 4, 6], color: '#D2691E' },
-  ];
+  // Residential Houses
+  const ResidentialHouse = ({ position, color = '#CD853F', roofColor = '#8B0000' }) => (
+    <group position={position}>
+      {/* Main house structure */}
+      <mesh position={[0, 2, 0]} castShadow>
+        <boxGeometry args={[12, 4, 10]} />
+        <meshLambertMaterial color={color} />
+      </mesh>
+      {/* Roof */}
+      <mesh position={[0, 4.5, 0]} castShadow>
+        <coneGeometry args={[8, 2, 4]} />
+        <meshLambertMaterial color={roofColor} />
+      </mesh>
+      {/* Front door */}
+      <mesh position={[0, 1, 5.1]} castShadow>
+        <boxGeometry args={[1.5, 3, 0.2]} />
+        <meshLambertMaterial color="#654321" />
+      </mesh>
+      {/* Windows */}
+      <mesh position={[-3, 2.5, 5.1]} castShadow>
+        <boxGeometry args={[2, 1.5, 0.15]} />
+        <meshLambertMaterial color="#87CEEB" />
+      </mesh>
+      <mesh position={[3, 2.5, 5.1]} castShadow>
+        <boxGeometry args={[2, 1.5, 0.15]} />
+        <meshLambertMaterial color="#87CEEB" />
+      </mesh>
+      {/* Side windows */}
+      <mesh position={[-6.1, 2.5, 0]} castShadow>
+        <boxGeometry args={[0.15, 1.5, 2]} />
+        <meshLambertMaterial color="#87CEEB" />
+      </mesh>
+      <mesh position={[6.1, 2.5, 0]} castShadow>
+        <boxGeometry args={[0.15, 1.5, 2]} />
+        <meshLambertMaterial color="#87CEEB" />
+      </mesh>
+    </group>
+  );
+
+  // Office Buildings
+  const OfficeBuilding = ({ position, height = 15, color = '#696969' }) => (
+    <group position={position}>
+      {/* Main building */}
+      <mesh position={[0, height/2, 0]} castShadow>
+        <boxGeometry args={[15, height, 12]} />
+        <meshLambertMaterial color={color} />
+      </mesh>
+      {/* Windows grid */}
+      {[...Array(Math.floor(height/3))].map((_, floor) => 
+        [...Array(4)].map((_, window) => (
+          <mesh key={`${floor}-${window}`} position={[-6 + window * 4, 2 + floor * 3, 6.1]} castShadow>
+            <boxGeometry args={[1.5, 1.2, 0.1]} />
+            <meshLambertMaterial color="#B0E0E6" />
+          </mesh>
+        ))
+      )}
+      {/* Entrance */}
+      <mesh position={[0, 2, 6.1]} castShadow>
+        <boxGeometry args={[4, 4, 0.2]} />
+        <meshLambertMaterial color="#2F4F4F" />
+      </mesh>
+    </group>
+  );
+
+  // Skyscraper
+  const Skyscraper = ({ position }) => (
+    <group position={position}>
+      {/* Main tower */}
+      <mesh position={[0, 20, 0]} castShadow>
+        <boxGeometry args={[12, 40, 12]} />
+        <meshLambertMaterial color="#4682B4" />
+      </mesh>
+      {/* Top section */}
+      <mesh position={[0, 42, 0]} castShadow>
+        <boxGeometry args={[8, 4, 8]} />
+        <meshLambertMaterial color="#36648B" />
+      </mesh>
+      {/* Windows pattern */}
+      {[...Array(13)].map((_, floor) => 
+        [...Array(3)].map((_, window) => (
+          <mesh key={`sky-${floor}-${window}`} position={[-4 + window * 4, 2 + floor * 3, 6.1]} castShadow>
+            <boxGeometry args={[1.2, 1, 0.05]} />
+            <meshLambertMaterial color="#E6F3FF" />
+          </mesh>
+        ))
+      )}
+    </group>
+  );
+
+  // Shopping Center
+  const ShoppingCenter = ({ position }) => (
+    <group position={position}>
+      {/* Main structure */}
+      <mesh position={[0, 3, 0]} castShadow>
+        <boxGeometry args={[25, 6, 15]} />
+        <meshLambertMaterial color="#DDA0DD" />
+      </mesh>
+      {/* Store fronts */}
+      <mesh position={[-8, 2, 7.6]} castShadow>
+        <boxGeometry args={[6, 4, 0.2]} />
+        <meshLambertMaterial color="#FF69B4" />
+      </mesh>
+      <mesh position={[0, 2, 7.6]} castShadow>
+        <boxGeometry args={[6, 4, 0.2]} />
+        <meshLambertMaterial color="#FFB6C1" />
+      </mesh>
+      <mesh position={[8, 2, 7.6]} castShadow>
+        <boxGeometry args={[6, 4, 0.2]} />
+        <meshLambertMaterial color="#FFA0C1" />
+      </mesh>
+      {/* Parking area indicator */}
+      <mesh position={[0, 0.1, -10]} receiveShadow>
+        <boxGeometry args={[20, 0.1, 8]} />
+        <meshLambertMaterial color="#4C4C4C" />
+      </mesh>
+    </group>
+  );
 
   return (
     <>
-      {buildings.map((building, index) => (
-        <mesh key={index} position={building.position} castShadow>
-          <boxGeometry args={building.size} />
-          <meshLambertMaterial color={building.color} />
-        </mesh>
-      ))}
+      {/* Residential Area */}
+      <ResidentialHouse position={[25, 0, 25]} color="#F4A460" roofColor="#8B0000" />
+      <ResidentialHouse position={[45, 0, 25]} color="#DEB887" roofColor="#A0522D" />
+      <ResidentialHouse position={[25, 0, 45]} color="#D2B48C" roofColor="#CD853F" />
+      <ResidentialHouse position={[45, 0, 45]} color="#BC8F8F" roofColor="#8B4513" />
+      
+      <ResidentialHouse position={[-25, 0, 25]} color="#FFEFD5" roofColor="#800000" />
+      <ResidentialHouse position={[-45, 0, 25]} color="#FFE4B5" roofColor="#B22222" />
+      <ResidentialHouse position={[-25, 0, 45]} color="#FFDAB9" roofColor="#DC143C" />
+      
+      {/* Office District */}
+      <OfficeBuilding position={[60, 0, -30]} height={18} color="#708090" />
+      <OfficeBuilding position={[80, 0, -30]} height={22} color="#696969" />
+      <OfficeBuilding position={[100, 0, -30]} height={16} color="#778899" />
+      
+      <OfficeBuilding position={[-60, 0, -30]} height={20} color="#2F4F4F" />
+      <OfficeBuilding position={[-80, 0, -30]} height={24} color="#696969" />
+      
+      {/* Downtown Skyscrapers */}
+      <Skyscraper position={[30, 0, -70]} />
+      <Skyscraper position={[-30, 0, -70]} />
+      <Skyscraper position={[0, 0, -90]} />
+      
+      {/* Shopping Areas */}
+      <ShoppingCenter position={[-70, 0, 40]} />
+      <ShoppingCenter position={[70, 0, 40]} />
+      
+      {/* Mixed Buildings */}
+      <OfficeBuilding position={[120, 0, 20]} height={12} color="#BDB76B" />
+      <ResidentialHouse position={[120, 0, 60]} color="#F0E68C" roofColor="#DAA520" />
+      <OfficeBuilding position={[-120, 0, 20]} height={14} color="#9ACD32" />
+      <ResidentialHouse position={[-120, 0, 60]} color="#ADFF2F" roofColor="#32CD32" />
+      
+      {/* Industrial Area */}
+      <mesh position={[0, 4, 120]} castShadow>
+        <boxGeometry args={[40, 8, 20]} />
+        <meshLambertMaterial color="#A9A9A9" />
+      </mesh>
+      <mesh position={[50, 3, 120]} castShadow>
+        <boxGeometry args={[30, 6, 15]} />
+        <meshLambertMaterial color="#808080" />
+      </mesh>
     </>
   );
 }
