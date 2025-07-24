@@ -726,15 +726,20 @@ export default function GameWorld({
 }) {
   return (
     <div style={{ width: '100%', height: '100vh' }}>
-      <Canvas shadows camera={{ position: [10, 8, 10], fov: 75 }}>
-        {/* Lighting */}
-        <ambientLight intensity={0.6} />
+      <Canvas shadows camera={{ position: [15, 12, 15], fov: 75, far: 500 }}>
+        {/* Enhanced Lighting */}
+        <ambientLight intensity={0.4} />
         <directionalLight 
-          position={[10, 10, 5]} 
-          intensity={1}
+          position={[20, 20, 10]} 
+          intensity={1.2}
           castShadow
-          shadow-mapSize={[2048, 2048]}
+          shadow-mapSize={[4096, 4096]}
+          shadow-camera-left={-150}
+          shadow-camera-right={150}
+          shadow-camera-top={150}
+          shadow-camera-bottom={-150}
         />
+        <pointLight position={[0, 10, 0]} intensity={0.5} />
         
         {/* World elements */}
         <Ground />
@@ -770,7 +775,7 @@ export default function GameWorld({
           />
         ))}
         
-        <OrbitControls enablePan={false} maxDistance={20} minDistance={5} />
+        <OrbitControls enablePan={true} maxDistance={50} minDistance={8} />
       </Canvas>
     </div>
   );
