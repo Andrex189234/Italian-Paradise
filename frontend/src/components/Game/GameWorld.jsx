@@ -604,57 +604,112 @@ function NPCs() {
   const npcs = [
     {
       id: 'npc1',
-      position: { x: 8, y: 0, z: 8 },
+      position: { x: 20, y: 0, z: 20 },
       color: '#32CD32',
       walkPath: [
-        { x: 8, z: 8 },
-        { x: 15, z: 8 },
-        { x: 15, z: 15 },
-        { x: 8, z: 15 }
+        { x: 20, z: 20 },
+        { x: 35, z: 20 },
+        { x: 35, z: 35 },
+        { x: 20, z: 35 }
       ]
     },
     {
       id: 'npc2', 
-      position: { x: -12, y: 0, z: 10 },
+      position: { x: -30, y: 0, z: 25 },
       color: '#FFD700',
       walkPath: [
-        { x: -12, z: 10 },
-        { x: -5, z: 10 },
-        { x: -5, z: 5 },
-        { x: -12, z: 5 }
+        { x: -30, z: 25 },
+        { x: -15, z: 25 },
+        { x: -15, z: 10 },
+        { x: -30, z: 10 }
       ]
     },
     {
       id: 'npc3',
-      position: { x: 18, y: 0, z: -8 },
+      position: { x: 50, y: 0, z: -20 },
       color: '#9370DB',
       walkPath: [
-        { x: 18, z: -8 },
-        { x: 25, z: -8 },
-        { x: 25, z: -15 },
-        { x: 18, z: -15 }
+        { x: 50, z: -20 },
+        { x: 65, z: -20 },
+        { x: 65, z: -35 },
+        { x: 50, z: -35 }
       ]
     },
     {
       id: 'npc4',
-      position: { x: -20, y: 0, z: -5 },
+      position: { x: -50, y: 0, z: -15 },
       color: '#FF69B4',
       walkPath: [
-        { x: -20, z: -5 },
-        { x: -15, z: -5 },
-        { x: -15, z: -12 },
-        { x: -20, z: -12 }
+        { x: -50, z: -15 },
+        { x: -35, z: -15 },
+        { x: -35, z: -30 },
+        { x: -50, z: -30 }
       ]
     },
     {
       id: 'npc5',
-      position: { x: 5, y: 0, z: -20 },
+      position: { x: 15, y: 0, z: -60 },
       color: '#20B2AA',
       walkPath: [
-        { x: 5, z: -20 },
-        { x: 12, z: -20 },
-        { x: 12, z: -25 },
-        { x: 5, z: -25 }
+        { x: 15, z: -60 },
+        { x: 30, z: -60 },
+        { x: 30, z: -75 },
+        { x: 15, z: -75 }
+      ]
+    },
+    {
+      id: 'npc6',
+      position: { x: -70, y: 0, z: 30 },
+      color: '#FF4500',
+      walkPath: [
+        { x: -70, z: 30 },
+        { x: -55, z: 30 },
+        { x: -55, z: 45 },
+        { x: -70, z: 45 }
+      ]
+    },
+    {
+      id: 'npc7',
+      position: { x: 80, y: 0, z: 10 },
+      color: '#8A2BE2',
+      walkPath: [
+        { x: 80, z: 10 },
+        { x: 95, z: 10 },
+        { x: 95, z: 25 },
+        { x: 80, z: 25 }
+      ]
+    },
+    {
+      id: 'npc8',
+      position: { x: 10, y: 0, z: 80 },
+      color: '#DC143C',
+      walkPath: [
+        { x: 10, z: 80 },
+        { x: 25, z: 80 },
+        { x: 25, z: 95 },
+        { x: 10, z: 95 }
+      ]
+    },
+    {
+      id: 'npc9',
+      position: { x: -40, y: 0, z: -60 },
+      color: '#00CED1',
+      walkPath: [
+        { x: -40, z: -60 },
+        { x: -25, z: -60 },
+        { x: -25, z: -75 },
+        { x: -40, z: -75 }
+      ]
+    },
+    {
+      id: 'npc10',
+      position: { x: 60, y: 0, z: -50 },
+      color: '#FFB6C1',
+      walkPath: [
+        { x: 60, z: -50 },
+        { x: 75, z: -50 },
+        { x: 75, z: -65 },
+        { x: 60, z: -65 }
       ]
     }
   ];
