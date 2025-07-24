@@ -954,7 +954,19 @@ export default function GameWorld({
           />
         ))}
         
-        <OrbitControls enablePan={true} maxDistance={50} minDistance={8} />
+        <OrbitControls 
+          enablePan={true} 
+          maxDistance={50} 
+          minDistance={8}
+          enableRotate={true}
+          autoRotate={false}
+          enableZoom={true}
+          mouseButtons={{
+            LEFT: 0, // LEFT mouse button for rotation
+            MIDDLE: 1, // MIDDLE mouse button for zoom  
+            RIGHT: 2 // RIGHT mouse button for pan
+          }}
+        />
       </Canvas>
     </div>
   );
