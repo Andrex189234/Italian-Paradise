@@ -927,12 +927,20 @@ export default function GameWorld({
           onPositionChange={onPlayerMove}
         />
         
-        {/* Vehicles */}
-        {vehicles.map(vehicle => (
+        {/* Player Vehicle (when driving) */}
+        {player.in_vehicle && player.current_vehicle && (
+          <PlayerVehicle 
+            vehicle={vehicles.find(v => v.id === player.current_vehicle)}
+            player={player}
+          />
+        )}
+        
+        {/* Vehicles (not being driven) */}
+        {vehicles.filter(vehicle => vehicle.id !== player.current_vehicle).map(vehicle => (
           <Vehicle
             key={vehicle.id}
             vehicle={vehicle}
-            isPlayerVehicle={player.current_vehicle === vehicle.id}
+            isPlayerVehicle={false}
             onEnter={() => onVehicleEnter(vehicle)}
           />
         ))}
