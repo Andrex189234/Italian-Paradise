@@ -228,17 +228,18 @@ export default function GameController() {
             title: "Marco risponde",
             description: "Ciao! Ho alcuni lavori per te. Controlla la mappa!"
           });
+          // Show available missions on map
           break;
         case 'heists':
           toast({
             title: "Salvatore risponde", 
-            description: "Hai quello che serve per un colpo grosso?"
+            description: "Hai quello che serve per un colpo grosso? Vai ai marker rossi!"
           });
           break;
         case 'vehicles':
           toast({
             title: "Concessionario risponde",
-            description: "Abbiamo nuovi veicoli disponibili!"
+            description: "Abbiamo nuovi veicoli disponibili! Vieni a trovarci!"
           });
           break;
         default:
@@ -248,6 +249,14 @@ export default function GameController() {
           });
       }
     }, 1500);
+    
+    // Close phone after call
+    setTimeout(() => {
+      setUIState(prev => ({
+        ...prev,
+        showPhone: false
+      }));
+    }, 3000);
   };
 
   // Add keyboard event listeners
