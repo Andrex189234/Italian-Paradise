@@ -316,6 +316,13 @@ export default function GameController() {
         onMissionStart={handleMissionStart}
       />
       
+      <MiniMap
+        player={gameState.player}
+        vehicles={gameState.vehicles}
+        missions={gameState.missions}
+        npcs={[]} // Will be populated with NPC data
+      />
+      
       <GameUI
         player={gameState.player}
         contacts={gameState.contacts}
