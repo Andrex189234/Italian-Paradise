@@ -102,7 +102,7 @@ export const mockGameData = {
       reward: 500,
       type: 'delivery',
       status: 'available',
-      location: { x: 30, y: 0, z: 30 }
+      location: { x: 50, y: 0, z: 60 }
     },
     {
       id: 'mission2',
@@ -111,7 +111,7 @@ export const mockGameData = {
       reward: 10000,
       type: 'heist',
       status: 'available',
-      location: { x: -20, y: 0, z: 25 }
+      location: { x: -30, y: 0, z: -70 }
     },
     {
       id: 'mission3',
@@ -120,7 +120,25 @@ export const mockGameData = {
       reward: 2000,
       type: 'race',
       status: 'available',
-      location: { x: 40, y: 0, z: -10 }
+      location: { x: 80, y: 0, z: -20 }
+    },
+    {
+      id: 'mission4',
+      title: 'Trasporto VIP',
+      description: 'Trasporta un cliente importante in sicurezza',
+      reward: 1500,
+      type: 'delivery',
+      status: 'available',
+      location: { x: -70, y: 0, z: 40 }
+    },
+    {
+      id: 'mission5',
+      title: 'Rapina Gioielleria',
+      description: 'Ruba i gioielli più preziosi della città',
+      reward: 7500,
+      type: 'heist',
+      status: 'available',
+      location: { x: 30, y: 0, z: -90 }
     }
   ],
 
