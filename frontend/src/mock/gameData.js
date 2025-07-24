@@ -16,7 +16,7 @@ export const mockGameData = {
       id: 'car1',
       name: 'Ferrari Roma',
       type: 'sports',
-      position: { x: 10, y: 0, z: 10 },
+      position: { x: 15, y: 0, z: 15 },
       available: true,
       price: 200000
     },
@@ -24,7 +24,7 @@ export const mockGameData = {
       id: 'car2', 
       name: 'Fiat 500',
       type: 'compact',
-      position: { x: 20, y: 0, z: 5 },
+      position: { x: -25, y: 0, z: 12 },
       available: true,
       price: 15000
     },
@@ -32,9 +32,65 @@ export const mockGameData = {
       id: 'car3',
       name: 'Vespa Primavera',
       type: 'scooter',
-      position: { x: 5, y: 0, z: 15 },
+      position: { x: 8, y: 0, z: -18 },
       available: true,
       price: 3000
+    },
+    {
+      id: 'car4',
+      name: 'Ferrari F8',
+      type: 'sports',
+      position: { x: 45, y: 0, z: 35 },
+      available: true,
+      price: 250000
+    },
+    {
+      id: 'car5',
+      name: 'Fiat Panda',
+      type: 'compact',
+      position: { x: -40, y: 0, z: -25 },
+      available: true,
+      price: 12000
+    },
+    {
+      id: 'car6',
+      name: 'Ducati Panigale',
+      type: 'scooter',
+      position: { x: 70, y: 0, z: -10 },
+      available: true,
+      price: 25000
+    },
+    {
+      id: 'car7',
+      name: 'Lamborghini Huracán',
+      type: 'sports',
+      position: { x: -60, y: 0, z: 50 },
+      available: true,
+      price: 300000
+    },
+    {
+      id: 'car8',
+      name: 'Alfa Romeo Giulia',
+      type: 'compact',
+      position: { x: 90, y: 0, z: 20 },
+      available: true,
+      price: 45000
+    },
+    {
+      id: 'car9',
+      name: 'Vespa GTS',
+      type: 'scooter',
+      position: { x: -80, y: 0, z: -40 },
+      available: true,
+      price: 5000
+    },
+    {
+      id: 'car10',
+      name: 'Maserati MC20',
+      type: 'sports',
+      position: { x: 25, y: 0, z: -70 },
+      available: true,
+      price: 400000
     }
   ],
 
