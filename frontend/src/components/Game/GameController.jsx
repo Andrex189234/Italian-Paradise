@@ -176,20 +176,38 @@ export default function GameController() {
   };
 
   const handleMissionAccept = (mission) => {
+    // Start mission logic
     setGameState(prev => ({
       ...prev,
       missions: prev.missions.map(m => 
         m.id === mission.id ? { ...m, status: 'active' } : m
-      )
+      ),
+      player: {
+        ...prev.player,
+        money: prev.player.money + mission.reward
+      }
     }));
+    
     setUIState(prev => ({
       ...prev,
       selectedMission: null
     }));
+    
+    // Mission completion simulation
     toast({
-      title: "Missione accettata",
-      description: `Hai accettato: ${mission.title}`
+      title: "Missione completata!",
+      description: `Hai guadagnato €${mission.reward}! ${mission.title} completata con successo.`
     });
+    
+    // After some time, complete the mission
+    setTimeout(() => {
+      setGameState(prev => ({
+        ...prev,
+        missions: prev.missions.map(m => 
+          m.id === mission.id ? { ...m, status: 'completed' } : m
+        )
+      }));
+    }, 3000);
   };
 
   const handleMissionDecline = () => {
